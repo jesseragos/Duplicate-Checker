@@ -55,11 +55,21 @@ function uploadCsv() {
       let rowColData = rowData.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
 
       if (rowColData && rowColData.length > 1) {
-        rowDataList.push(rowColData);
+        rowDataList.push({
+          firstName: rowColData[0],
+          lastName: rowColData[1],
+          email: rowColData[2],
+          address: rowColData[3],
+          phone: rowColData[4],
+          ipAddress: rowColData[5],
+          paypalName: rowColData[6],
+        });
       }
     });
 
+    console.log('rowDataList', rowDataList);
     profileList = profileList.concat(rowDataList);
+    console.log('new profileList', profileList);
 
     displayResults(checkDuplicatesInList());
   };
@@ -91,6 +101,7 @@ function checkDuplicatesInList() {
     for (let j = i + 1; j < profileList.length; j++) {
       profile1 = profileList[i];
       profile2 = profileList[j];
+      //   console.log('i index:', i, ': ', j);
 
       if (
         isStringDuplicate(profile1.address, profile2.address) ||
@@ -99,7 +110,8 @@ function checkDuplicatesInList() {
         isStringDuplicate(profile1.ipAddress, profile2.ipAddress) ||
         isStringDuplicate(profile1.paypalName, profile2.paypalName)
       ) {
-        listOfDuplicates.push(profileList.splice(i, 1)[0]);
+        listOfDuplicates.push(profileList.splice(j, 1)[0]);
+        break;
       }
     }
   }

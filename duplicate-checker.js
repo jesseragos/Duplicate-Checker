@@ -83,9 +83,9 @@ function displayResults(listOfDuplicates) {
   if (listOfDuplicates.length) {
     resultBoard.innerText = `${
       listOfDuplicates.length
-    } duplicate records detected
+    } duplicate records detected:
     ${listOfDuplicates.map((profile) => {
-      return `${profile.firstName} ${profile.lastName}`;
+      return ` ${profile.firstName} ${profile.lastName}`;
     })}`;
   } else {
     resultBoard.innerText = 'There are no duplicate records';
@@ -101,7 +101,6 @@ function checkDuplicatesInList() {
     for (let j = i + 1; j < profileList.length; j++) {
       profile1 = profileList[i];
       profile2 = profileList[j];
-      //   console.log('i index:', i, ': ', j);
 
       if (
         isStringDuplicate(profile1.address, profile2.address) ||

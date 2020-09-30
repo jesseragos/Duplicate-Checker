@@ -67,9 +67,7 @@ function uploadCsv() {
       }
     });
 
-    console.log('rowDataList', rowDataList);
     profileList = profileList.concat(rowDataList);
-    console.log('new profileList', profileList);
 
     displayResults(checkDuplicatesInList());
   };
@@ -79,7 +77,7 @@ function uploadCsv() {
 
 function displayResults(listOfDuplicates) {
   let resultBoard = document.getElementById('resultBoard');
-  console.log('listOfDuplicates', listOfDuplicates);
+
   if (listOfDuplicates.length) {
     resultBoard.innerText = `${
       listOfDuplicates.length
@@ -119,8 +117,6 @@ function checkDuplicatesInList() {
 }
 
 function isStringDuplicate(str1, str2) {
-  console.log('str1', str1);
-  console.log('str2', str2);
   if (normalizeString(str1).localeCompare(normalizeString(str2)) == 0)
     return true;
 

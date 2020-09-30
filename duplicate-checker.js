@@ -28,16 +28,6 @@ function inputRecord() {
   let ipAddress = document.getElementById('ipAddress').value;
   let paypalName = document.getElementById('paypalName').value;
 
-  //   console.log(`
-  //   firstName: ${firstName},
-  //   lastName: ${lastName},
-  //   address: ${address},
-  //   email: ${email},
-  //   phone: ${phone},
-  //   ipAddress: ${ipAddress},
-  //   paypalName: ${paypalName}
-  //   `);
-
   let profileInput = {
     firstName,
     lastName,
@@ -50,7 +40,7 @@ function inputRecord() {
 
   profileList.push(profileInput);
 
-  displayResults(checkDuplicatesInList(profileList));
+  displayResults(checkDuplicatesInList());
 }
 
 function uploadCsv() {
@@ -69,11 +59,9 @@ function uploadCsv() {
       }
     });
 
-    checkListDuplicates(rowDataList, profileList);
+    profileList = profileList.concat(rowDataList);
 
-    console.log('listOfDuplicates', listOfDuplicates);
-
-    displayResults(listOfDuplicates);
+    displayResults(checkDuplicatesInList());
   };
   // start reading the file. When it is done, calls the onload event defined above.
   reader.readAsBinaryString(csvFile.files[0]);
@@ -81,47 +69,47 @@ function uploadCsv() {
 
 function displayResults(listOfDuplicates) {
   let resultBoard = document.getElementById('resultBoard');
-
+  console.log('listOfDuplicates', listOfDuplicates);
   if (listOfDuplicates.length) {
-    resultBoard.innerText =
-      listOfDuplicates.length + ' duplicate records detected';
+    resultBoard.innerText = `${
+      listOfDuplicates.length
+    } duplicate records detected
+    ${listOfDuplicates.map((profile) => {
+      return `${profile.firstName} ${profile.lastName}`;
+    })}`;
   } else {
     resultBoard.innerText = 'There are no duplicate records';
   }
 }
 
-function checkListDuplicates(list1, list2) {
-  return list1.filter(function (list1Item) {
-    return checkDuplicatesInList(list1Item, list2);
-  });
-}
+function checkDuplicatesInList() {
+  let listOfDuplicates = [],
+    profile1,
+    profile2;
 
-function checkDuplicatesInList(list) {
-  let isDuplicate = false;
-  let strippedList = list.map(function (profileData, index) {
-    return {
-      address: profileData.address,
-      email: profileData.email,
-      phone: profileData.phone,
-      ipAddress: profileData.ipAddress,
-      paypalName: profileData.paypalName,
-    };
-  });
+  for (let i = 0; i < profileList.length; i++) {
+    for (let j = i + 1; j < profileList.length; j++) {
+      profile1 = profileList[i];
+      profile2 = profileList[j];
 
-  profileList = strippedList.filter(function (profileData, index) {
-    isDuplicate = strippedList.indexOf(profileData) != index;
-
-    if (isDuplicate) {
-      //
+      if (
+        isStringDuplicate(profile1.address, profile2.address) ||
+        isStringDuplicate(profile1.email, profile2.email) ||
+        isStringDuplicate(profile1.phone, profile2.phone) ||
+        isStringDuplicate(profile1.ipAddress, profile2.ipAddress) ||
+        isStringDuplicate(profile1.paypalName, profile2.paypalName)
+      ) {
+        listOfDuplicates.push(profileList.splice(i, 1)[0]);
+      }
     }
+  }
 
-    return strippedList;
-  });
-
-  return profileList;
+  return listOfDuplicates;
 }
 
 function isStringDuplicate(str1, str2) {
+  console.log('str1', str1);
+  console.log('str2', str2);
   if (normalizeString(str1).localeCompare(normalizeString(str2)) == 0)
     return true;
 

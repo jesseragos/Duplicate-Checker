@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/style.css" />
+
+    <title>Duplicate Checker</title>
+  </head>
+  <body>
+    <div class="jumbotron bg-primary text-light">
+      <div class="container">
+        <h1>Duplicate Checker</h1>
+        <p>
+          Check duplicate records of registrants applying for the same
+          promotion.
+        </p>
+      </div>
+    </div>
+
+    <div class="d-flex flex-wrap container">
+      <div class="col-lg-6 col-md-12">
+        <div class="card shadow p-5 m-3">
+          <form
+            class="d-flex align-items-center justify-items-center flex-column"
+            onsubmit="uploadCsv(); return false;"
+          >
+            <h2>Upload CSV records</h2>
+            <div class="form-group d-flex align-items-center">
+              <input
+                type="file"
+                class="form-control-file"
+                id="uploadCSV"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary w-50">Submit</button>
+          </form>
+        </div>
+
+        <div class="card shadow p-5 m-3">
+          <form
+            class="d-flex align-items-center flex-column"
+            onsubmit="inputRecord(); return false;"
+          >
+            <h2>Enter a record</h2>
+            <div class="row">
+              <div class="form-group col-lg-6 col-md-12">
+                <label for="firstName">First Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="firstName"
+                  required
+                />
+              </div>
+              <div class="form-group col-lg-6 col-md-12">
+                <label for="lastName">Last Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lastName"
+                  required
+                />
+              </div>
+              <div class="form-group col-12">
+                <label for="address">Shipping Address</label>
+                <input type="text" class="form-control" id="address" required />
+              </div>
+              <div class="form-group col-lg-6 col-md-12">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" required />
+              </div>
+              <div class="form-group col-lg-6 col-md-12">
+                <label for="phone">Phone number</label>
+                <input type="tel" class="form-control" id="phone" required />
+              </div>
+              <div class="form-group col-lg-6 col-md-12">
+                <label for="ipAddress">IP Address</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="ipAddress"
+                  pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                  required
+                />
+              </div>
+              <div class="form-group col-lg-6 col-md-12">
+                <label for="paypalName">Paypal Name/Email</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="paypalName"
+                  required
+                />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-50">Submit</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-12 d-flex">
+        <div
+          class="shadow d-flex align-items-center justify-items-center my-3 p-3 w-100"
+        >
+          <div class="display-4 text-center w-100" id="resultBoard">
+            Submit record(s) to check for duplicates
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js">
+      import isEqual from 'https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js';
+    </script> -->
+
+    <script type="text/javascript" src="/duplicate-checker.js"></script>
+  </body>
+</html>
